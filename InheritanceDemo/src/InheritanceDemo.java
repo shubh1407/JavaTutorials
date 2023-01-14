@@ -8,6 +8,15 @@ class B extends A{
 
 class Parent{
 	
+	public Parent() {
+		//this(1);
+	}
+	
+	
+	Parent(int a){
+		this();   // super()   
+	}
+	
 	public void sum() {
 		System.out.println("parent class method");
 	}
