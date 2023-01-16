@@ -1,13 +1,14 @@
-
-public class VariableDemo {
+public strictfp class VariableDemo {
 
 	static double  num=100000000.02;  // inside class outside method  
 				// can be access using object of class 
 	char ch ='a';
+	float num2=5.0F/7.0F;  
 	char ch2='b';
-	public double sum() {
-		 int num1=20;  // inside method
-		return num1+num;
+	
+	public float sum() {
+		 float num1=5.0F/7.0F;  // inside method
+		return num1;
 	}
 	//
 	
@@ -21,11 +22,8 @@ public class VariableDemo {
 	
 	public static void main(String[] args) {
 		VariableDemo variableDemo = new VariableDemo();
-		System.out.println(variableDemo.num);  
-		VariableDemo variableDemo1 = new VariableDemo();
-		variableDemo1.num=20;
-		System.out.println(variableDemo1.num);  
-		System.out.println(variableDemo.num);  
+		
+		System.out.println(variableDemo.sum());  
 	}
 	
 }
