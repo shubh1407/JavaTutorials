@@ -5,7 +5,7 @@ public class StringBuilderDemo {
 	
 	public static void main(String[] args) {
 		
-		StringBuffer stringBuilder = new StringBuffer();   // heap //mutable string
+		StringBuilder stringBuilder = new StringBuilder();   // heap //mutable string
 		
 		stringBuilder.append(" is programming language");
 		
