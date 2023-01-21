@@ -1,5 +1,4 @@
-import java.io.IOException;
-
+//try catch is handling 
 class Parent {
 	
 	public void methodA() throws Exception{
@@ -18,15 +17,19 @@ class Child extends Parent{
 
 public class ExceptionDemo {
 
-	public static void main(String[] args) throws ArithmeticException {
+	public static void main(String[] args) throws CustomCheckedException{
 
 		int num = 10;
-
 		
+		//System.exit(0);
 		
-		System.out.println(new ExceptionDemo().methodCall());
+		//System.out.println(new ExceptionDemo().methodCall());
 
 		System.out.println("end of program");
+		
+		throw new CustomCheckedException("my own exception", 100);
+		
+		
 	}
 	
 	private int methodCall() {
