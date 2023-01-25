@@ -3,10 +3,19 @@ import java.util.Iterator;
 /*
  * Collections  -> list   -> 1. Insertion order 
  * 							 2. Duplication allowed
- * 								-> 1. ArrayList 
+ * 								-> 1. ArrayList   -> manipulation is slower but fetching faster
+ * 												  -> Act as a list only.
  * 										 vs		
- * 								-> 2. LinkedList
- * 				-> Set    ->
+ * 								-> 2. LinkedList  -> manipulation is faster but fetching slower, 
+ * 												  -> Act as stack, queue and list.
+ * 				
+ * 				-> Set    -> 1. Insertion order not maintained
+ * 						  	 2. Duplication not allowed
+ * 								  -> 1. HashSet
+ * 											-> Hashing is method to insert element in hashset.
+ * 									 2. LinkedHashSet
+ * 								     3. TreeSet
+ * 
  * 
  * 				-> Map
  * 				
@@ -36,10 +45,10 @@ public class ArrayListDemo {
 		
 		
 		// Deleting
-		list2.remove(1);
+		list2.remove(students);
 		
-		System.out.println(list2.get(1).getName());
-		
+		System.out.println(list2.get(1).getName());  //O(1)
+		 
 		// length
 		
 		System.out.println(list2.size());
