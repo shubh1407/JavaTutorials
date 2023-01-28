@@ -9,17 +9,19 @@ import java.util.stream.Collectors;
 	Boolean anyMatch
 	Collect
 	Count
-	Distinct
 	findAny
 	findFirst
+	max
+	min 
 	forEach
+	Distinct
+	
 	Limit
 	Filter
 	toArray
 	Map  -> convert each element of stream to different value
 	sorted
-	max
-	min 
+	
  */
 public class StreamApiDemo {
 

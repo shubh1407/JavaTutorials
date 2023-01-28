@@ -59,44 +59,73 @@ package stream;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
-import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 
 public class JavaStreamsExamples {
     public static void main(String[] args) throws IOException {
       
     	
-    	Student[] students = {new Student("abc",1,75),new Student("def",2,85),new Student("ghi",3,95),
-    		   new Student("abcd",4,76),new Student("defg",5,45),new Student("ghij",6,35)};
+    	Student[] students = {	 new Student("abc",1,75)
+				    			,new Student("def",2,85)
+				    			,new Student("ghi",3,95)
+				    			,new Student("abcd",4,76)
+				    			,new Student("defg",5,45)
+				    			,new Student("ghij",6,35)};
        
        	int sumOfMarks=0;
        	
        	
        	//Write code here to print total sum of all student marks with help of stream api
        	
-       	
+       	sumOfMarks=	Arrays.stream(students)
+       	.mapToInt(stu -> stu.getMarks())   
+       	.sum();
        
-       	
-       	
+       	     	
        	System.out.println("total sum of marks : "+sumOfMarks);
         
         System.out.println("\nFollowing students got marks less than 80");
         
        // code
+      //  Arrays.stream(students).filter(new LessThan80Selector()).forEach(System.out::println);
+       
+        Arrays.stream(students).filter(e -> e.getMarks()<80).forEach(System.out::println);
                
         System.out.println("\nFollowing students got marks more than 90");
         
         
        // code
+        Arrays.stream(students).filter(new MoreThan90Selector()).forEach(System.out::println);
+        
+        Arrays.stream(students).filter(e -> e.getMarks()>90).forEach(System.out::println);
         
         System.out.println("\nFollowing students got marks equal to 85 :");
         
         //code
+        Arrays.stream(students).filter(new EqualTo85Selector()).forEach(System.out::println);
+        
+        Arrays.stream(students).filter(e -> e.getMarks()==85).forEach(System.out::println);
+        
+        Arrays.stream(students).map(stud -> stud).collect(Collectors.toSet());
+        
+        Arrays.stream(students).map(stud -> stud).collect(Collectors
+        		.toMap(stud -> stud.getRoll(),stu -> stu));
+        
+       Map<Integer,List<Student>> map= Arrays.stream(students).map(stud -> stud)
+    		   .collect(Collectors.groupingBy(stud -> stud.getMarks()));
     }
     
 }
 
+// 10 employees and 3 dep (a,b,c)
+// 3 -> a
 
+// 4 -> b
+
+// 3 -> c
 
 
 
@@ -150,3 +179,46 @@ class Student{
 		this.marks = marks;
 	}
 }
+
+
+class LessThan80Selector implements Predicate<Student>{
+
+	@Override
+	public boolean test(Student t) {
+		if(t.getMarks()<80) {
+			return true;
+		}
+		return false;
+	}
+	
+}
+
+class MoreThan90Selector implements Predicate<Student>{
+
+	@Override
+	public boolean test(Student t) {
+		if(t.getMarks()>90) {
+			return true;
+		}
+		return false;
+	}
+}
+
+
+class EqualTo85Selector implements Predicate<Student>{
+
+	@Override
+	public boolean test(Student t) {
+		if(t.getMarks()==85) {
+			return true;
+		}
+		return false;
+	}
+	
+}
+
+
+
+
+
+
