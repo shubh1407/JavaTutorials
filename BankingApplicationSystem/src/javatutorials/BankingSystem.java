@@ -13,9 +13,8 @@
 
 package javatutorials;
 
-import java.util.Random;
+import java.sql.SQLException;
 import java.util.Scanner;
-import java.util.UUID;
 
 import javatutorials.beans.AccountDetails;
 import javatutorials.beans.AccountHolderInformation;
@@ -25,7 +24,7 @@ import javatutorials.util.BankOperationsUtility;
 
 public class BankingSystem {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		BankOperationsUtility bankOperationsUtility = new BankOperationsUtility();
 		Scanner scanner = new Scanner(System.in);
 		do {
@@ -83,12 +82,12 @@ public class BankingSystem {
 				
 				System.out.println("Please enter your customer Id");
 				custId = scanner.nextInt();
-				if(BankingStorage.accountHolders.keySet().contains(custId)) {
-					System.out.println("Please enter amount you want to deposit");
-					double amount= scanner.nextDouble();
-					AccountDetails accountDetails= bankOperationsUtility.depositAmount(custId, amount);
+				System.out.println("Please enter amount you want to deposit");
+				double amount= scanner.nextDouble();
+				AccountDetails accountDetails= bankOperationsUtility.depositAmount(custId, amount);
+				if(accountDetails!=null) {
 					System.out.println("Amount is deposited successfully.\n"
-							+ "Your updated amount is "+accountDetails.getAmount());
+						+ "Your updated amount is "+accountDetails.getAmount());
 				}
 				else {
 					System.out.println("Customer not found.Please verify your details.");
@@ -99,10 +98,11 @@ public class BankingSystem {
 				
 				System.out.println("Please enter your customer Id");
 				custId = scanner.nextInt();
-				if(BankingStorage.accountHolders.keySet().contains(custId)) {
-					System.out.println("Please enter amount you want to withdrawl from account");
-					double amount= scanner.nextDouble();
-					AccountDetails accountDetails= bankOperationsUtility.withdrawlAmount(custId, amount);
+				
+				System.out.println("Please enter amount you want to withdrawl from account");
+				amount= scanner.nextDouble();
+				accountDetails= bankOperationsUtility.withdrawlAmount(custId, amount);
+				if(accountDetails!=null) {
 					System.out.println("Amount is withdrawl successfully.\n"
 							+ "Your updated amount is "+accountDetails.getAmount());
 				}
@@ -113,7 +113,8 @@ public class BankingSystem {
 			case 4:
 				System.out.println("Please enter your customer Id");
 				custId = scanner.nextInt();
-				if(BankingStorage.accountHolders.keySet().contains(custId)) {
+				accountHolderInformation = bankOperationsUtility.getCustomerDetails(custId);
+				if(accountHolderInformation!=null) {
 					System.out.println(bankOperationsUtility.getCustomerDetails(custId).toString());
 				}
 				else {
@@ -123,9 +124,10 @@ public class BankingSystem {
 			case 5:
 				System.out.println("Please enter your customer Id");
 				custId = scanner.nextInt();
-				if(BankingStorage.accountHolders.keySet().contains(custId)) {
+				accountHolderInformation = bankOperationsUtility.getCustomerDetails(custId);
+				if(accountHolderInformation!=null) {
 					System.out.println(bankOperationsUtility.getAccountDetails
-					(bankOperationsUtility.getCustomerDetails(custId).getAccountNo()).toString());
+					(accountHolderInformation.getAccountNo()).toString());
 				}
 				else {
 					System.out.println("Customer not found.Please verify your details.");
@@ -134,18 +136,17 @@ public class BankingSystem {
 			case 6:
 				System.out.println("Please enter your customer Id");
 				custId = scanner.nextInt();
-				if(BankingStorage.accountHolders.keySet().contains(custId)) {
+				if(bankOperationsUtility.getCustomerDetails(custId)!=null) {
 					System.out.println("Please enter target customer Id");
 					int custId2 = scanner.nextInt();
 					if(custId==custId2) {
 						System.out.println("Source account and target account can't be same");
 						continue;
 					}
-					if(BankingStorage.accountHolders.keySet().contains(custId2)) {
+					if(bankOperationsUtility.getCustomerDetails(custId2)!=null) {
 						System.out.println("Please enter amount you want to transfer");
-						double amount= scanner.nextDouble();
-						AccountDetails accountDetails= bankOperationsUtility.withdrawlAmount(custId, amount);
-						bankOperationsUtility.depositAmount(custId2, amount);
+						amount= scanner.nextDouble();
+						accountDetails= bankOperationsUtility.fundTrasfer(custId,custId2, amount);
 						System.out.println("Your fund transfer is done successfully\n"
 								+ "your updated balance is "+accountDetails.getAmount());
 					}
@@ -154,7 +155,7 @@ public class BankingSystem {
 					}
 				}
 				else {
-					System.out.println("Customer not found.Please verify your details.");
+					System.out.println("Source Customer not found.Please verify your details.");
 				}
 				break;
 			case 7:
